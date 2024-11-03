@@ -57,7 +57,7 @@ venv: ${VENV_BIN}activate
 ## lock        : Lock development and production dependencies.
 # Tf there is pending changes, run gha-update.
 ${VENV_BIN}uv: ${VENV_BIN}activate
-	${VENV_BIN}pip install --quiet uv${UV_VERSION}
+	${VENV_BIN}pip install --quiet --disable-pip-version-check uv${UV_VERSION}
 requirements-dev.lock: ${VENV_BIN}uv requirements-dev.txt constraints.txt pyproject.toml requirements-prod.txt
 	${VENV_BIN}uv pip compile --quiet --resolver=backtracking --generate-hashes --strip-extras --allow-unsafe --output-file=requirements-dev.lock --no-header --no-annotate requirements-dev.txt pyproject.toml --constraint=constraints.txt
 requirements-prod.lock: pyproject.toml requirements-prod.txt requirements-dev.lock
